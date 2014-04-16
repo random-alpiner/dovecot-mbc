@@ -69,6 +69,7 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 		-I${DOVECOT_INCDIR}/src/lib-storage \
 		-I${DOVECOT_INCDIR}/src/lib-mail \
 		-I${DOVECOT_INCDIR}/src/lib-imap \
+		-I${DOVECOT_INCDIR}/src/lib-index \
 		$< -o $@
 
 %.1 : %.1.in
