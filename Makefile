@@ -63,7 +63,7 @@ build: ${PLUGIN_NAME} ${MAN1PAGES}
 ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
 		-fPIC -shared -Wall \
-		.I./src \
+		-I./src \
 		-I./contrib/src \
 		-I${DOVECOT_INCDIR} \
 		-I${DOVECOT_INCDIR}/src \

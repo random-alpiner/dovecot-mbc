@@ -7,7 +7,7 @@
 #include "mail-storage.h"
 #include "mail-storage-private.h"
 #include "notify-plugin.h"
-#include "mbc-script-plugin.h"
+#include "mbc-plugin.h"
 
 #include <stdlib.h>
 
