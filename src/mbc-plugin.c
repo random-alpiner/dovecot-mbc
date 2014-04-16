@@ -3,7 +3,9 @@
 #include "llist.h"
 #include "str.h"
 #include "str-sanitize.h"
+#include "compat.h"
 #include "imap-util.h"
+#include "module-context.h"
 #include "mail-user.h"
 #include "mail-storage-private.h"
 #include "notify-plugin.h"
@@ -20,7 +22,7 @@ static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
 
 struct mbc_user {
-	struct mail_user_module_context module_ctx;
+	union mail_user_module_context module_ctx;
 	const char *mbc_script_loc;
 };
 
