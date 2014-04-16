@@ -52,6 +52,7 @@ mbc_mailbox_create(struct mailbox *box)
 	struct mail_namespace *namspc = mailbox_list_get_namespace(box->list);
 
 	char *directory;
+	char *prefix = namspc->prefix;
 	
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
@@ -64,7 +65,7 @@ mbc_mailbox_create(struct mailbox *box)
 	if (muser->mbc_script_loc){
 		setenv("MBC_MAILBOX", box->name, 1);
 		setenv("MBC_DIRECTORY", directory, 1);
-		setenv("MBC_PREFIX", namspc->prefix, 1);
+		setenv("MBC_PREFIX", prefix, 1);
 		system(muser->mbc_script_loc);
 		unsetenv("MBC_MAILBOX");
 		unsetenv("MBC_DIRECTORY");
