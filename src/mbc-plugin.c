@@ -49,24 +49,21 @@ static void
 mbc_mailbox_create(struct mailbox *box)
 {
 	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
-	struct mail_namespace *ns;
 
 	char *directory;
---------char *prefix;
 	
-	ns = mailbox_get_namespace(box);
-	if (mail_storage_is_mailbox_file(ns.storage)) {
-		directory = mailbox_list_get_path(ns.list, box->name,
+	if (mail_storage_is_mailbox_file(box->storage)) {
+		directory = mailbox_list_get_path(box->list, box->name,
 					    MAILBOX_LIST_PATH_TYPE_CONTROL);
 	} else {
-		directory = mailbox_list_get_path(ns.list, box->name,
+		directory = mailbox_list_get_path(box->list, box->name,
 					    MAILBOX_LIST_PATH_TYPE_MAILBOX);
 	}
 
 	if (muser->mbc_script_loc){
 		setenv("MBC_MAILBOX", box->name, 1);
 		setenv("MBC_DIRECTORY", directory, 1);
-		setenv("MBC_PREFIX", ns.prefix, 1);
+		setenv("MBC_PREFIX", box->list->ns->prefix, 1);
 		system(muser->mbc_script_loc);
 		unsetenv("MBC_MAILBOX");
 		unsetenv("MBC_DIRECTORY");
