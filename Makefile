@@ -38,18 +38,18 @@ CPPFLAGS += -DDOVECOT_PLUGIN_API_2_0
 endif
 
 # plugin source & target name #
-PLUGIN_SOURCES = mbc-plugin.c
+PLUGIN_SOURCES = src/mbc-plugin.c
 PLUGIN_NAME = lib22_mbc_plugin.so
 
 # helper sources, target name & setuid account #
-SCRIPT_NAME = mbc_set_acl.sh
+SCRIPT_NAME = contrib/mbc_set_acl.sh
 SCRIPT_USER = dovecot
 
 # manual pages in their respective sections #
-MAN1PAGES = dovecot-mbc.1
+MAN1PAGES = man/dovecot-mbc.1
 
 # sample config file
-CONFIG = 90-mbc.conf
+CONFIG = conf/90-mbc.conf
 
 #### configuration end ####
 
@@ -63,7 +63,7 @@ build: ${PLUGIN_NAME} ${MAN1PAGES}
 ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
 		-fPIC -shared -Wall \
-		.I. \
+		.I./src \
 		-I./contrib/src \
 		-I${DOVECOT_INCDIR} \
 		-I${DOVECOT_INCDIR}/src \
