@@ -63,7 +63,7 @@ mbc_mailbox_create(struct mailbox *box)
 	if (muser->mbc_script_loc){
 		setenv("MBC_MAILBOX", box->name, 1);
 		setenv("MBC_DIRECTORY", directory, 1);
-		setenv("MBC_PREFIX", box->list->ns->prefix, 1);
+		setenv("MBC_PREFIX", box->list->ns_prefix, 1);
 		system(muser->mbc_script_loc);
 		unsetenv("MBC_MAILBOX");
 		unsetenv("MBC_DIRECTORY");
