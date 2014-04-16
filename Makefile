@@ -11,7 +11,7 @@ PACKAGE_VERSION = $(lastword $(sort $(subst upstream/,, $(filter upstream/%, $(s
 
 ## paths & directories ##
 # Dovecot's header directory
-DOVECOT_INCDIR = /usr/include/dovecot
+DOVECOT_INCDIR = ./contrib
 # Dovecot's IMAP plugin path
 DOVECOT_IMAP_MODULEDIR = /usr/lib/dovecot/modules
 # Dovecot's config directory (where dovecot.conf resides)
@@ -64,11 +64,6 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
 		-fPIC -shared -Wall \
 		-I${DOVECOT_INCDIR} \
-		-I${DOVECOT_INCDIR}/src \
-		-I${DOVECOT_INCDIR}/src/lib \
-		-I${DOVECOT_INCDIR}/src/lib-storage \
-		-I${DOVECOT_INCDIR}/src/lib-mail \
-		-I${DOVECOT_INCDIR}/src/lib-imap \
 		-DHAVE_CONFIG_H \
 		$< -o $@
 
