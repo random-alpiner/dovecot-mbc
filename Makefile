@@ -64,7 +64,6 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
 		-fPIC -shared -Wall \
 		-I${DOVECOT_INCDIR} \
-		-DHAVE_CONFIG_H \
 		$< -o $@
 
 %.1 : %.1.in
