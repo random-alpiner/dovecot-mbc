@@ -2,8 +2,8 @@
 #include "array.h"
 #include "llist.h"
 #include "str.h"
-
 #include "str-sanitize.h"
+#include "compat.h"
 #include "mail-storage.h"
 #include "mail-storage-private.h"
 #include "notify-plugin.h"
