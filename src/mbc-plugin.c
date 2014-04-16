@@ -27,27 +27,6 @@ struct mbc_user {
 static MODULE_CONTEXT_DEFINE_INIT(mbc_user_module,
 				  &mail_user_module_register);
 
-static struct mail_storage_hooks mbc_mail_storage_hooks = {
-	.mail_user_created = mbc_mail_user_created
-};
-
-static const struct notify_vfuncs mbc_vfuncs = {
-	.mailbox_create = mbc_mailbox_create,
-	.mailbox_rename = mbc_mailbox_rename
-};
-
-void mbc_plugin_init(void)
-{
-	mbc_ctx = notify_register(&mbc_vfuncs);
-	mail_storage_hooks_add(module, &mbc_mail_storage_hooks);
-}
-
-void mbc_plugin_deinit(void)
-{
-	notify_unregister(mbc_ctx);
-	mail_storage_hooks_remove(&mbc_mail_storage_hooks);
-}
-
 static void mbc_mail_user_created(struct mail_user *user)
 {
 	struct mbc_user *muser;
@@ -59,6 +38,10 @@ static void mbc_mail_user_created(struct mail_user *user)
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
 }
+
+static struct mail_storage_hooks mbc_mail_storage_hooks = {
+	.mail_user_created = mbc_mail_user_created
+};
 
 static void
 mbc_mailbox_create(struct mailbox *box)
@@ -94,4 +77,21 @@ mbc_mailbox_rename(struct mailbox *src,
 			struct mailbox *dest, bool rename_children ATTR_UNUSED)
 {
 	mbc_mailbox_create(dest);
+}
+
+static const struct notify_vfuncs mbc_vfuncs = {
+	.mailbox_create = mbc_mailbox_create,
+	.mailbox_rename = mbc_mailbox_rename
+};
+
+void mbc_plugin_init(void)
+{
+	mbc_ctx = notify_register(&mbc_vfuncs);
+	mail_storage_hooks_add(module, &mbc_mail_storage_hooks);
+}
+
+void mbc_plugin_deinit(void)
+{
+	notify_unregister(mbc_ctx);
+	mail_storage_hooks_remove(&mbc_mail_storage_hooks);
 }
