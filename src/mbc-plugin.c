@@ -48,7 +48,7 @@ static struct mail_storage_hooks mbc_mail_storage_hooks = {
 static void
 mbc_mailbox_create(struct mailbox *box)
 {
-	struct mbc_user *muser = mbc_USER_CONTEXT(box->storage->user);
+	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
 	struct mail_namespace *ns;
 
 	char *directory;
@@ -63,10 +63,10 @@ mbc_mailbox_create(struct mailbox *box)
 					    MAILBOX_LIST_PATH_TYPE_MAILBOX);
 	}
 
-	if (muser->script_loc){
-		setenv("MBC_MAILBOX", box->name);
-		setenv("MBC_DIRECTORY", directory);
-		setenv("MBC_PREFIX", ns->prefix);
+	if (muser->mbc_script_loc){
+		setenv("MBC_MAILBOX", box->name, 1);
+		setenv("MBC_DIRECTORY", directory, 1);
+		setenv("MBC_PREFIX", ns->prefix, 1);
 		system(muser->mbc_script_loc);
 		unsetenv("MBC_MAILBOX");
 		unsetenv("MBC_DIRECTORY");
@@ -86,7 +86,7 @@ static const struct notify_vfuncs mbc_vfuncs = {
 	.mailbox_rename = mbc_mailbox_rename
 };
 
-void mbc_plugin_init(void)
+void mbc_plugin_init(struct module *module)
 {
 	mbc_ctx = notify_register(&mbc_vfuncs);
 	mail_storage_hooks_add(module, &mbc_mail_storage_hooks);
