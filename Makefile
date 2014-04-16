@@ -39,7 +39,7 @@ endif
 
 # plugin source & target name #
 PLUGIN_SOURCES = mbc-plugin.c
-PLUGIN_NAME = lib_mbc_plugin.so
+PLUGIN_NAME = lib22_mbc_plugin.so
 
 # helper sources, target name & setuid account #
 SCRIPT_NAME = mbc_set_acl.sh
@@ -87,8 +87,8 @@ install_plugin: ${PLUGIN_NAME}
 	install $< ${DESTDIR}/${DOVECOT_IMAP_MODULEDIR}
 
 install_script: ${SCRIPT_NAME}
-	install -d ${DESTDIR}/${ETCDIR}
-	install -o ${SCRIPT_USER} -m 4755 $< ${DESTDIR}/${ETCDIR}
+	install -d ${DESTDIR}/${DOVECOT_ETCDIR}
+	install -o ${SCRIPT_USER} -m 4755 $< ${DESTDIR}/${DOVECOT_ETCDIR}
 
 install_man: ${MAN1PAGES}
 	install -d ${DESTDIR}/${MAN1DIR}
