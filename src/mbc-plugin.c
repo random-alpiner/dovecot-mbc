@@ -18,7 +18,7 @@
 #define MBC_USER_CONTEXT(obj) \
 	MODULE_CONTEXT(obj, mbc_user_module)
 	
-#define struct mail_namespace mail_namespace
+extern struct mail_namespace;
 
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
