@@ -31,6 +31,7 @@ CONFIGDIR = /etc/dovecot/conf.d
 ## usually no need to configure anything below this line ##
 
 # set additional flags
+CPPFLAGS += -DHAVE_UOFF_T
 ifdef DOVECOT_PLUGIN_API_2_1
 CPPFLAGS += -DDOVECOT_PLUGIN_API_2_1
 else ifdef DOVECOT_PLUGIN_API_2_0
