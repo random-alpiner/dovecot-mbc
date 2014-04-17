@@ -8,6 +8,7 @@
 #include "module-context.h"
 #include "mail-user.h"
 #include "mail-storage-private.h"
+#include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
 
@@ -17,8 +18,6 @@
 
 #define MBC_USER_CONTEXT(obj) \
 	MODULE_CONTEXT(obj, mbc_user_module)
-	
-struct mail_namespace;
 
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
