@@ -51,7 +51,8 @@ mbc_mailbox_create(struct mailbox *box)
 	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
 
 	char *directory;
-	char prefix[128] = box->list->ns->prefix;
+	struct mail_namespace *ns = box->list->ns;
+	char prefix[128] = ns->prefix;
 
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
