@@ -12,6 +12,7 @@
 #include "mbc-plugin.h"
 
 #include <stdlib.h>
+#include <sys/types.h>
 
 #define MAILBOX_NAME_LEN 64
 
