@@ -18,7 +18,7 @@
 #define MBC_USER_CONTEXT(obj) \
 	MODULE_CONTEXT(obj, mbc_user_module)
 	
-extern struct mail_namespace;
+struct mail_namespace;
 
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
@@ -53,7 +53,7 @@ mbc_mailbox_create(struct mailbox *box)
 	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
 
 	char *directory;
-	struct mail_namespace *ns = box->list->ns;
+	struct mail_namespace *ns = mailbox_list_get_namespace(box->list);
 	char *prefix = ns->prefix;
 
 	if (mail_storage_is_mailbox_file(box->storage)) {
