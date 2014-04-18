@@ -8,6 +8,7 @@
 #include "module-context.h"
 #include "mail-user.h"
 #include "mail-storage-private.h"
+#include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
 
@@ -51,8 +52,9 @@ mbc_mailbox_create(struct mailbox *box)
 	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
 
 	char *directory;
-	const char prefix[box->list->ns->prefix_len] = box->list->ns->prefix;
-	
+	struct mail_namespace *ns = mailbox_list_get_namespace(box->list);
+	char *prefix = ns->prefix;
+
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
 					    MAILBOX_LIST_PATH_TYPE_CONTROL);
@@ -70,6 +72,7 @@ mbc_mailbox_create(struct mailbox *box)
 		unsetenv("MBC_DIRECTORY");
 		unsetenv("MBC_PREFIX");
 	}
+	free(prefix);
 }
 
 static void
