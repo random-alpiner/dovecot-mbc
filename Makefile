@@ -63,13 +63,14 @@ else
         else ifeq ($(typeof(*off_t)),long long)
                 UOFF_T_LONG_LONG = 1
         else
-		@echo "$(typeof(*off_t))"
+		TYPE = $(typeof(*off_t))
 	endif
 endif
 
 .PHONY: all build install install_man clean
 
 all: build
+	@echo $(TYPE)
 
 build: ${PLUGIN_NAME} ${MAN1PAGES}
 
