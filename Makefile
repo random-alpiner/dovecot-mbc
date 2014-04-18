@@ -23,16 +23,6 @@ MAN1DIR = /usr/share/man/man1
 # directory for sample config
 CONFIGDIR = /etc/dovecot/conf.d
 
-## Set uoff_t type
-# native support
-HAVE_UOFF_T = 1
-# type int
-#UOFF_T_INT = 1
-# type long
-#UOFF_T_LONG = 1
-# type long long
-#UOFF_T_LONG_LONG = 1
-
 # uncomment the one matching your Dovecot version
 #DOVECOT_PLUGIN_API_2_1 = 1
 DOVECOT_PLUGIN_API_2_0 = 1
@@ -63,6 +53,11 @@ CONFIG = conf/90-mbc.conf
 
 #### configuration end ####
 
+ifdef uoff_t
+	HAVE_UOFF_T = 1
+else
+	typeof(*off_t) uoff_t
+endif
 
 .PHONY: all build install install_man clean
 
