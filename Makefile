@@ -58,13 +58,13 @@ ifdef uoff_t
 else
 	ifeq ($(typeof(*off_t)),int)
 		UOFF_T_INT = 1
-	endif
-        ifeq ($(typeof(*off_t)),long)
+	else ifeq ($(typeof(*off_t)),long)
                 UOFF_T_LONG = 1
-        endif
-        ifeq ($(typeof(*off_t)),long long)
+        else ifeq ($(typeof(*off_t)),long long)
                 UOFF_T_LONG_LONG = 1
-        endif
+        else
+		@echo "$(typeof(*off_t))"
+	endif
 endif
 
 .PHONY: all build install install_man clean
