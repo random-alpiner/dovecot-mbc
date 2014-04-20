@@ -1,0 +1,116 @@
+# Makefile for dovecot mbc-plugin
+
+
+#### configuration begin ####
+
+
+## package name and latest version ##
+PACKAGE_NAME = dovecot-mbc
+#PACKAGE_VERSION = $(shell git tag | grep upstream | sort -r | head -n 1 | cut -d / -f 2)
+PACKAGE_VERSION = $(lastword $(sort $(subst upstream/,, $(filter upstream/%, $(shell git tag)))))
+
+## paths & directories ##
+# Dovecot's header directory
+DOVECOT_INCDIR = /usr/include/dovecot
+# Dovecot's IMAP plugin path
+DOVECOT_IMAP_MODULEDIR = /usr/lib/dovecot/modules
+# Dovecot's config directory (where dovecot.conf resides)
+DOVECOT_ETCDIR = /etc/dovecot
+# directory for binaries
+BINDIR = /usr/bin
+# directories for man pages section 1
+MAN1DIR = /usr/share/man/man1
+# directory for sample config
+CONFIGDIR = /etc/dovecot/conf.d
+
+# uncomment the one matching your Dovecot version
+#DOVECOT_PLUGIN_API_2_1 = 1
+DOVECOT_PLUGIN_API_2_0 = 1
+
+
+## usually no need to configure anything below this line ##
+
+# set additional flags
+CFLAGS = @CFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@ @DEFS@
+LDFLAGS = @LDFLAGS@ @LIBS@
+
+ifdef DOVECOT_PLUGIN_API_2_1
+CPPFLAGS += -DDOVECOT_PLUGIN_API_2_1
+else ifdef DOVECOT_PLUGIN_API_2_0
+CPPFLAGS += -DDOVECOT_PLUGIN_API_2_0
+endif
+
+# plugin source & target name #
+PLUGIN_SOURCES = src/mbc-plugin.c
+PLUGIN_NAME = lib20_mbc_plugin.so
+
+# helper sources, target name & setuid account #
+SCRIPT_NAME = contrib/mbc_set_acl.sh
+SCRIPT_USER = dovecot
+
+# manual pages in their respective sections #
+MAN1PAGES = man/dovecot-mbc.1
+
+# sample config file
+CONFIG = conf/90-mbc.conf
+
+# compiler is determined by configure.in
+CC = @CC@
+
+#### configuration end ####
+
+.PHONY: all build install install_man clean
+
+all: build
+
+build: ${PLUGIN_NAME} ${MAN1PAGES}
+
+${PLUGIN_NAME}: ${PLUGIN_SOURCES}
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
+		-fPIC -shared -Wall \
+		-I./src \
+		-I./contrib/src \
+		-I${DOVECOT_INCDIR} \
+		-I${DOVECOT_INCDIR}/src \
+		-I${DOVECOT_INCDIR}/src/lib \
+		-I${DOVECOT_INCDIR}/src/lib-storage \
+		-I${DOVECOT_INCDIR}/src/lib-mail \
+		-I${DOVECOT_INCDIR}/src/lib-imap \
+		-I${DOVECOT_INCDIR}/src/lib-index \
+		$< -o $@
+
+%.1 : %.1.in
+	sed -e 's:DOVECOT_IMAP_MODULEDIR:${DOVECOT_IMAP_MODULEDIR}:g' \
+		-e 's:BINDIR:${BINDIR}:g' \
+		-e 's:MAN1DIR:${MAN1DIR}:g' \
+ 		-e 's:DOVECOT_ETCDIR:${DOVECOT_ETCDIR}:g' \
+		-e 's:PLUGIN_NAME:${PLUGIN_NAME}:g' \
+	$< > $@
+
+install: install_plugin install_script install_config install_man
+
+install_plugin: ${PLUGIN_NAME}
+	install -d ${DESTDIR}/${DOVECOT_IMAP_MODULEDIR}
+	install $< ${DESTDIR}/${DOVECOT_IMAP_MODULEDIR}
+
+install_script: ${SCRIPT_NAME}
+	install -d ${DESTDIR}/${DOVECOT_ETCDIR}
+	install -o ${SCRIPT_USER} -m 4755 $< ${DESTDIR}/${DOVECOT_ETCDIR}
+
+install_man: ${MAN1PAGES}
+	install -d ${DESTDIR}/${MAN1DIR}
+	install $? ${DESTDIR}/${MAN1DIR}
+
+install_config: ${CONFIG}
+	install -d ${DESTDIR}/${CONFIGDIR}
+	install $< ${DESTDIR}/${CONFIGDIR}
+
+clean:
+	$(RM) ${PLUGIN_NAME} ${SCRIPT_NAME} ${MAN1PAGES} ${CONFIG}
+
+dist:
+	git archive --format=tar --prefix ${PACKAGE_NAME}-${PACKAGE_VERSION}/ \
+		upstream/${PACKAGE_VERSION} \
+	| gzip -9f > ${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.gz
+#EOF
