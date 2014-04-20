@@ -7,7 +7,6 @@
 #include "imap-util.h"
 #include "module-context.h"
 #include "mail-user.h"
-#include "mail-storage-private.h"
 #include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
