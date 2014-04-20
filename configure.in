@@ -1,0 +1,65 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.69])
+AC_INIT(dovecot-mbc, 1.0, lukas.mika@web.de)
+AC_CONFIG_SRCDIR([src/mbc-plugin.c])
+AC_CONFIG_HEADERS([config.h])
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_CHECK_HEADERS([stdlib.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADER_STDBOOL
+AC_CHECK_TYPE(uoff_t, [
+  have_uoff_t=yes
+  AC_DEFINE(HAVE_UOFF_T,, Define if you have a native uoff_t type)
+], [
+  have_uoff_t=no
+])
+
+AC_TYPEOF(off_t, long int long-long)
+case "$typeof_off_t" in
+  int)
+    offt_max=INT_MAX
+    uofft_fmt="u"
+    if test "$have_uoff_t" != "yes"; then
+      AC_DEFINE(UOFF_T_INT,, Define if off_t is int)
+    fi
+    offt_bits=`expr 8 \* $ac_cv_sizeof_int`
+    ;;
+  long)
+    offt_max=LONG_MAX
+    uofft_fmt="lu"
+    if test "$have_uoff_t" != "yes"; then
+      AC_DEFINE(UOFF_T_LONG,, Define if off_t is long)
+    fi
+    offt_bits=`expr 8 \* $ac_cv_sizeof_long`
+    ;;
+  "long long")
+    offt_max=LLONG_MAX
+    uofft_fmt="llu"
+    if test "$have_uoff_t" != "yes"; then
+      AC_DEFINE(UOFF_T_LONG_LONG,, Define if off_t is long long)
+    fi
+    offt_bits=`expr 8 \* $ac_cv_sizeof_long_long`
+    offt_bits=`expr 8 \* $ac_cv_sizeof_long_long`
+    ;;
+  *)
+    AC_MSG_ERROR([Unsupported off_t type])
+    ;;
+esac
+
+CFLAGS="$CFLAGS $EXTRA_CFLAGS"
+
+# Checks for library functions.
+AC_CHECK_FUNCS([setenv])
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
