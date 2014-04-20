@@ -53,20 +53,6 @@ CONFIG = conf/90-mbc.conf
 
 #### configuration end ####
 
-ifdef uoff_t
-	HAVE_UOFF_T = 1
-else
-	ifeq ($(typeof(*off_t)),int)
-		UOFF_T_INT = 1
-	else ifeq ($(typeof(*off_t)),long)
-                UOFF_T_LONG = 1
-        else ifeq ($(typeof(*off_t)),long long)
-                UOFF_T_LONG_LONG = 1
-        else
-		TYPE = $(typeof(*off_t))
-	endif
-endif
-
 .PHONY: all build install install_man clean
 
 all: build
