@@ -31,6 +31,10 @@ DOVECOT_PLUGIN_API_2_0 = 1
 ## usually no need to configure anything below this line ##
 
 # set additional flags
+CFLAGS = @CFLAGS@ @DEFS@
+CPPFLAGS = @CPPFLAGS@ @DEFS@
+LDFLAGS = @LDFLAGS@ @LIBS@
+
 ifdef DOVECOT_PLUGIN_API_2_1
 CPPFLAGS += -DDOVECOT_PLUGIN_API_2_1
 else ifdef DOVECOT_PLUGIN_API_2_0
@@ -39,7 +43,7 @@ endif
 
 # plugin source & target name #
 PLUGIN_SOURCES = src/mbc-plugin.c
-PLUGIN_NAME = lib22_mbc_plugin.so
+PLUGIN_NAME = lib20_mbc_plugin.so
 
 # helper sources, target name & setuid account #
 SCRIPT_NAME = contrib/mbc_set_acl.sh
@@ -51,12 +55,14 @@ MAN1PAGES = man/dovecot-mbc.1
 # sample config file
 CONFIG = conf/90-mbc.conf
 
+# compiler is determined by configure.in
+CC = @CC@
+
 #### configuration end ####
 
 .PHONY: all build install install_man clean
 
 all: build
-	@echo $(TYPE)
 
 build: ${PLUGIN_NAME} ${MAN1PAGES}
 
@@ -78,7 +84,7 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 	sed -e 's:DOVECOT_IMAP_MODULEDIR:${DOVECOT_IMAP_MODULEDIR}:g' \
 		-e 's:BINDIR:${BINDIR}:g' \
 		-e 's:MAN1DIR:${MAN1DIR}:g' \
-		-e 's:DOVECOT_ETCDIR:${DOVECOT_ETCDIR}:g' \
+ 		-e 's:DOVECOT_ETCDIR:${DOVECOT_ETCDIR}:g' \
 		-e 's:PLUGIN_NAME:${PLUGIN_NAME}:g' \
 	$< > $@
 
