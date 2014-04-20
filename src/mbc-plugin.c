@@ -3,7 +3,6 @@
 #include "llist.h"
 #include "str.h"
 #include "str-sanitize.h"
-#include "compat.h"
 #include "imap-util.h"
 #include "module-context.h"
 #include "mail-user.h"
