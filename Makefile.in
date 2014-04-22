@@ -67,7 +67,7 @@ all: build
 build: ${PLUGIN_NAME} ${MAN1PAGES}
 
 ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) \
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(DEPS) \
 		-fPIC -shared -Wall \
 		-I./src \
 		-I./contrib/src \
