@@ -1,10 +1,10 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.64])
 AC_INIT(dovecot-mbc, 1.0, lukas.mika@web.de)
 AC_CONFIG_SRCDIR([src/mbc-plugin.c])
-AC_CONFIG_HEADERS([config.h])
+#AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
@@ -142,7 +142,10 @@ AC_DEFUN([AC_TYPEOF], [
   AC_MSG_RESULT($visible)
 ])
 
-AC_CHECK_HEADER_STDBOOL
+AC_CHECK_TYPE(uintmax_t, [ AC_DEFINE(HAVE_UINTMAX_T,, Define if you have uintmax_t already) ],[])
+AC_CHECK_TYPE(uint_fast32_t, [ AC_DEFINE(HAVE_UINT_FAST32_T,, Define if you have uint_fast32_t already) ],[])
+AC_CHECK_TYPE(socklen_t, [ AC_DEFINE(HAVE_SOCKLEN_T,, Define if you have socklen_t already) ],[])
+
 AC_CHECK_TYPE(uoff_t, [
   have_uoff_t=yes
   AC_DEFINE(HAVE_UOFF_T,, Define if you have a native uoff_t type)
@@ -182,7 +185,20 @@ case "$typeof_off_t" in
     ;;
 esac
 
-CFLAGS="$CFLAGS $EXTRA_CFLAGS"
+AC_MSG_CHECKING([for struct iovec])
+AC_CACHE_VAL(i_cv_struct_iovec,
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>]],
+[[struct iovec *iovec;]])],
+[i_cv_struct_iovec=yes],
+[i_cv_struct_iovec=no])])
+
+if test $i_cv_struct_iovec = yes; then
+        AC_DEFINE(HAVE_STRUCT_IOVEC,, Define if you have struct iovec)
+fi
+AC_MSG_RESULT($i_cv_struct_iovec)
 
 # Checks for library functions.
 AC_CHECK_FUNCS([setenv])

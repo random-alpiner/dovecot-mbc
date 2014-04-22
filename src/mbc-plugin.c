@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "lib.h"
 #include "array.h"
 #include "llist.h"
@@ -10,8 +12,6 @@
 #include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
-
-#include <stdlib.h>
 
 #define MAILBOX_NAME_LEN 64
 
