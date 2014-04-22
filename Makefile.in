@@ -95,7 +95,7 @@ install_plugin: ${PLUGIN_NAME}
 
 install_script: ${SCRIPT_NAME}
 	install -d ${DESTDIR}/${DOVECOT_ETCDIR}
-	install -o ${SCRIPT_USER} -m 4755 $< ${DESTDIR}/${DOVECOT_ETCDIR}
+	install -g ${SCRIPT_USER} -m 750 $< ${DESTDIR}/${DOVECOT_ETCDIR}
 
 install_man: ${MAN1PAGES}
 	install -d ${DESTDIR}/${MAN1DIR}
