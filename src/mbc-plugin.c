@@ -38,7 +38,6 @@ static void mbc_mail_user_created(struct mail_user *user)
 	MODULE_CONTEXT_SET(user, mbc_user_module, muser);
 
 	str = mail_user_plugin_getenv(user, "mbc_script");
-	i_info("MBC Script: %s", str);
 	muser->mbc_script_loc = str;
 }
 
@@ -55,6 +54,7 @@ mbc_mailbox_create(struct mailbox *box)
 	char *directory;
 	struct mail_namespace *ns = mailbox_list_get_namespace(box->list);
 	char *prefix = ns->prefix;
+	i_info("MBC Script: %s", prefix);
 
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
@@ -71,7 +71,6 @@ mbc_mailbox_create(struct mailbox *box)
 	exec_args[3] = prefix;
 	exec_args[4] = NULL;
 
-	i_info("%s", muser->mbc_script_loc);
 	if (muser->mbc_script_loc){
 		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
 		env_put(t_strconcat("MBC_DIRECTORY=", directory, NULL));
