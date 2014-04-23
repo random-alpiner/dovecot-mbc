@@ -52,10 +52,23 @@ mbc_mailbox_create(struct mailbox *box)
 
 	char **exec_args;
 	char *directory;
-	struct mail_namespace *ns = mailbox_list_get_namespace(box->list);
-	char *prefix = ns->prefix;
-	i_info("MBC Script: %s", prefix);
+	struct mail_namespace *ns = mailbox_get_namespace(box);
+	char *prefix;
+	char *mns_type;
 
+	if (ns->type == NAMESPACE_PRIVATE) {
+		i_info("MBC Script: Namespace is private");
+		mns_type = "private";
+	} else if (ns->type == NAMESPACE_PUBLIC) {
+		i_info("MBC Script: Namespace is public");
+		mns_type = "public";
+	} else if (ns->type == NAMESPACE_SHARED) {
+		i_info("MBC Script: Namespace is shared");
+		mns_type = "shared";
+	}
+
+	prefix = t_strdup(ns->set->prefix);
+	i_info("MBC Script: Prefix is %s", prefix);
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
 					    MAILBOX_LIST_PATH_TYPE_CONTROL);
@@ -75,12 +88,13 @@ mbc_mailbox_create(struct mailbox *box)
 		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
 		env_put(t_strconcat("MBC_DIRECTORY=", directory, NULL));
 		env_put(t_strconcat("MBC_PREFIX=", prefix, NULL));
+		env_put(t_strconcat("MBC_TYPE=", mns_type, NULL));
 		execvp_const(exec_args[0], exec_args);
 		env_remove("MBC_MAILBOX");
 		env_remove("MBC_DIRECTORY");
 		env_remove("MBC_PREFIX");
+		env_remove("MBC_TYPE");
 	}
-	free(prefix);
 }
 
 static void
