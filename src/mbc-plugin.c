@@ -51,6 +51,7 @@ mbc_mailbox_create(struct mailbox *box)
 {
 	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
 
+	char **exec_args;
 	char *directory;
 	struct mail_namespace *ns = mailbox_list_get_namespace(box->list);
 	char *prefix = ns->prefix;
@@ -63,15 +64,22 @@ mbc_mailbox_create(struct mailbox *box)
 					    MAILBOX_LIST_PATH_TYPE_MAILBOX);
 	}
 
+	exec_args = i_new(const char *, 5);
+	exec_args[0] = muser->mbc_script_loc;
+	exec_args[1] = box->name;
+	exec_args[2] = directory;
+	exec_args[3] = prefix;
+	exec_args[4] = NULL;
+
 	i_info("%s", muser->mbc_script_loc);
 	if (muser->mbc_script_loc){
-		setenv("MBC_MAILBOX", box->name, 1);
-		setenv("MBC_DIRECTORY", directory, 1);
-		setenv("MBC_PREFIX", prefix, 1);
-		system(muser->mbc_script_loc);
-		unsetenv("MBC_MAILBOX");
-		unsetenv("MBC_DIRECTORY");
-		unsetenv("MBC_PREFIX");
+		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
+		env_put(t_strconcat("MBC_DIRECTORY=", directory, NULL));
+		env_put(t_strconcat("MBC_PREFIX=", prefix, NULL));
+		execvp_const(exec_args[0], exec_args);
+		env_remove("MBC_MAILBOX");
+		env_remove("MBC_DIRECTORY");
+		env_remove("MBC_PREFIX");
 	}
 	free(prefix);
 }
