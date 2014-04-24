@@ -25,7 +25,7 @@ So please take this into consideration when your script is triggered in multiple
 
 License
 -------
-GPLv3 (hooray for the FSF! Free Software means Free Society!).
+GPLv3 for my stuff. (Hooray for the FSF! Free Software means Free Society!)
 
 For the notify-plugin.h file, it is LGPLv2.1
 
