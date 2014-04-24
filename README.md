@@ -52,7 +52,7 @@ Installation of the plugin is essentially a 4-step process:
 
       make build
 
-3) Then copy the resulting binary mbc_plugin.so, the man page, the default config and example script to the corresponding directories
+4) Then copy the resulting binary mbc_plugin.so, the man page, the default config and example script to the corresponding directories
    This can be achieved using:
 
       make install
