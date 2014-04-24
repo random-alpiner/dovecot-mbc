@@ -1,24 +1,23 @@
 dovecot-mbc
 ===========
 
-Dovecot plugin for executing a script on mailbox creation
+Dovecot plugin for executing a shell script on mailbox creation
 
 Description
 -----------
-dovecot-mbc is a plugin for Dovecot
+dovecot-mbc is a plugin for Dovecot, which can be used in order to let dovecot trigger a custom shell script, whenever a mailbox is created or renamed.
+You could use this for instance in order to automatically set ACLs for new public mailboxes, send a welcome message or triggering anything else.
 
-It can be used in order to let dovecot trigger a custom script, whenever a mailbox is created or renamed.
-You could use this for instance in order to automatically set ACLs for public mailboxes or send a welcome message.
-
-The script can be defined within the plugin's configuration and is provided with the following environment variables:
-- MBC_MAILBOX		mailbox name
-- MBC_DIRECTORY		mailbox directory
-- MBC_TYPE		mailbox namespace type (private/shared/public)
-- MBC_PREFIX		mailbox namespace prefix
-- MBC_INBOX		mailbox namespace is inbox (true/false)
-- MBC_HIDDEN		mailbox namespace hidden flag (true/false)
-- MBC_SUBSCRIPTIONS	mailbox namespace handles subscriptions (true/false)
-- MBC_LIST		mailbox namespace is listed (yes/no/children)
+The shell script's location can be defined within the plugin's configuration.
+The script itself is provided with the following environment variables at runtime:
+- MBC_MAILBOX - mailbox name
+- MBC_DIRECTORY - mailbox directory
+- MBC_TYPE - mailbox namespace type (private/shared/public)
+- MBC_PREFIX - mailbox namespace prefix
+- MBC_INBOX - mailbox namespace is inbox (true/false)
+- MBC_HIDDEN - mailbox namespace hidden flag (true/false)
+- MBC_SUBSCRIPTIONS - mailbox namespace handles subscriptions (true/false)
+- MBC_LIST - mailbox namespace is listed (yes/no/children)
 
 However, be reminded that the namespace information is depending on the context.
 If for example the mailbox is created by the LDA, it may describe a namespace as "private", which is described as "public" when triggered via IMAP with a user context.
@@ -26,7 +25,8 @@ So please take this into consideration when your script is triggered in multiple
 
 License
 -------
-GPLv3 (cheer for the FSF - Free Software means Free Society!)
+GPLv3 (hooray for the FSF! Free Software means Free Society!).
+
 For the notify-plugin.h file, it is LGPLv2.1
 
 Installation
