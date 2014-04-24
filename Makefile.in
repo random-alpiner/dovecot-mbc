@@ -11,21 +11,19 @@ PACKAGE_VERSION = $(lastword $(sort $(subst upstream/,, $(filter upstream/%, $(s
 
 ## mail user ##
 # name this to the mail user
-SCRIPT_USER = vmail
+SCRIPT_GROUP = vmail
 
 ## paths & directories ##
 # Dovecot's header directory
 DOVECOT_INCDIR = /usr/include/dovecot
 # Dovecot's IMAP plugin path
-DOVECOT_IMAP_MODULEDIR = /usr/lib/dovecot/modules
+DOVECOT_MODULEDIR = /usr/lib/dovecot/modules
 # Dovecot's config directory (where dovecot.conf resides)
 DOVECOT_ETCDIR = /etc/dovecot
-# directory for binaries
-BINDIR = /usr/bin
+# directory for sample config
+DOVECOT_CONFIGDIR = /etc/dovecot/conf.d
 # directories for man pages section 1
 MAN1DIR = /usr/share/man/man1
-# directory for sample config
-CONFIGDIR = /etc/dovecot/conf.d
 
 # uncomment the one matching your Dovecot version
 #DOVECOT_PLUGIN_API_2_1 = 1
@@ -84,7 +82,6 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 
 %.1 : %.1.in
 	sed -e 's:DOVECOT_IMAP_MODULEDIR:${DOVECOT_IMAP_MODULEDIR}:g' \
-		-e 's:BINDIR:${BINDIR}:g' \
 		-e 's:MAN1DIR:${MAN1DIR}:g' \
  		-e 's:DOVECOT_ETCDIR:${DOVECOT_ETCDIR}:g' \
 		-e 's:PLUGIN_NAME:${PLUGIN_NAME}:g' \
@@ -93,20 +90,20 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 install: install_plugin install_script install_config install_man
 
 install_plugin: ${PLUGIN_NAME}
-	install -d ${DESTDIR}/${DOVECOT_IMAP_MODULEDIR}
-	install $< ${DESTDIR}/${DOVECOT_IMAP_MODULEDIR}
+	install -d ${DESTDIR}/${DOVECOT_MODULEDIR}
+	install $< ${DESTDIR}/${DOVECOT_MODULEDIR}
 
 install_script: ${SCRIPT_NAME}
 	install -d ${DESTDIR}/${DOVECOT_ETCDIR}
-	install -g ${SCRIPT_USER} -m 750 $< ${DESTDIR}/${DOVECOT_ETCDIR}
+	install -g ${SCRIPT_GROUP} -m 750 $< ${DESTDIR}/${DOVECOT_ETCDIR}
 
 install_man: ${MAN1PAGES}
 	install -d ${DESTDIR}/${MAN1DIR}
 	install $? ${DESTDIR}/${MAN1DIR}
 
 install_config: ${CONFIG}
-	install -d ${DESTDIR}/${CONFIGDIR}
-	install $< ${DESTDIR}/${CONFIGDIR}
+	install -d ${DESTDIR}/${DOVECOT_CONFIGDIR}
+	install $< ${DESTDIR}/${DOVECOT_CONFIGDIR}
 
 clean:
 	$(RM) ${PLUGIN_NAME} ${SCRIPT_NAME} ${MAN1PAGES} ${CONFIG}

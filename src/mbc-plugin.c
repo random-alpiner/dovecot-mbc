@@ -55,20 +55,31 @@ mbc_mailbox_create(struct mailbox *box)
 	struct mail_namespace *ns = mailbox_get_namespace(box);
 	char *prefix;
 	char *mns_type;
+	char *is_inbox = "false", *is_hidden = "false", *handles_subscriptions = "false";
+	char *listed;
+
+	if (ns->set->inbox) {
+		is_inbox = "true";
+	}
+	if (ns->set->hidden) {
+		is_hidden = "true";
+	}
+	if (ns->set->subscriptions) {
+		handles_subscriptions = "true";
+	}
+	if (ns->set->list) {
+		listed = "true";
+	}
 
 	if (ns->type == NAMESPACE_PRIVATE) {
-		i_info("MBC Script: Namespace is private");
 		mns_type = "private";
 	} else if (ns->type == NAMESPACE_PUBLIC) {
-		i_info("MBC Script: Namespace is public");
 		mns_type = "public";
 	} else if (ns->type == NAMESPACE_SHARED) {
-		i_info("MBC Script: Namespace is shared");
 		mns_type = "shared";
 	}
 
 	prefix = t_strdup(ns->set->prefix);
-	i_info("MBC Script: Prefix is %s", prefix);
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
 					    MAILBOX_LIST_PATH_TYPE_CONTROL);
@@ -77,23 +88,35 @@ mbc_mailbox_create(struct mailbox *box)
 					    MAILBOX_LIST_PATH_TYPE_MAILBOX);
 	}
 
-	exec_args = i_new(const char *, 5);
+	exec_args = i_new(const char *, 9);
 	exec_args[0] = muser->mbc_script_loc;
 	exec_args[1] = box->name;
 	exec_args[2] = directory;
 	exec_args[3] = prefix;
-	exec_args[4] = NULL;
+	exec_args[4] = is_inbox;
+	exec_args[5] = is_hidden;
+	exec_args[6] = handles_subscriptions;
+	exec_args[7] = listed;
+	exec_args[8] = NULL;
 
 	if (muser->mbc_script_loc){
 		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
 		env_put(t_strconcat("MBC_DIRECTORY=", directory, NULL));
 		env_put(t_strconcat("MBC_PREFIX=", prefix, NULL));
 		env_put(t_strconcat("MBC_TYPE=", mns_type, NULL));
+		env_put(t_strconcat("MBC_INBOX=", is_inbox, NULL));
+		env_put(t_strconcat("MBC_HIDDEN=", is_hidden, NULL));
+		env_put(t_strconcat("MBC_SUBSCRIPTIONS=", handles_subscriptions, NULL));
+		env_put(t_strconcat("MBC_LIST=", listed, NULL));
 		execvp_const(exec_args[0], exec_args);
 		env_remove("MBC_MAILBOX");
 		env_remove("MBC_DIRECTORY");
 		env_remove("MBC_PREFIX");
 		env_remove("MBC_TYPE");
+		env_remove("MBC_INBOX");
+		env_remove("MBC_HIDDEN");
+		env_remove("MBC_SUBSCRIPTIONS");
+		env_remove("MBC_LIST");
 	}
 }
 
