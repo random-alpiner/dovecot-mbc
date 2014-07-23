@@ -57,7 +57,7 @@ mbc_mailbox_create(struct mailbox *box)
 	char *mns_type;
 	char *is_inbox = "false", *is_hidden = "false", *handles_subscriptions = "false";
 	char *listed;
-	char **path_r;
+	const char **path_r;
 
 	if (ns->set->inbox) {
 		is_inbox = "true";
