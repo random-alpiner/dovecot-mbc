@@ -57,6 +57,7 @@ mbc_mailbox_create(struct mailbox *box)
 	char *mns_type;
 	char *is_inbox = "false", *is_hidden = "false", *handles_subscriptions = "false";
 	char *listed;
+	char **path_r;
 
 	if (ns->set->inbox) {
 		is_inbox = "true";
@@ -82,10 +83,10 @@ mbc_mailbox_create(struct mailbox *box)
 	prefix = t_strdup(ns->set->prefix);
 	if (mail_storage_is_mailbox_file(box->storage)) {
 		directory = mailbox_list_get_path(box->list, box->name,
-					    MAILBOX_LIST_PATH_TYPE_CONTROL);
+					    MAILBOX_LIST_PATH_TYPE_CONTROL, path_r);
 	} else {
 		directory = mailbox_list_get_path(box->list, box->name,
-					    MAILBOX_LIST_PATH_TYPE_MAILBOX);
+					    MAILBOX_LIST_PATH_TYPE_MAILBOX, path_r);
 	}
 
 	exec_args = i_new(const char *, 9);
