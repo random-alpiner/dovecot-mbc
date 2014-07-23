@@ -72,11 +72,11 @@ mbc_mailbox_create(struct mailbox *box)
 		listed = "true";
 	}
 
-	if (ns->type == NAMESPACE_PRIVATE) {
+	if (ns->type == MAIL_NAMESPACE_TYPE_PRIVATE) {
 		mns_type = "private";
-	} else if (ns->type == NAMESPACE_PUBLIC) {
+	} else if (ns->type == MAIL_NAMESPACE_TYPE_PUBLIC) {
 		mns_type = "public";
-	} else if (ns->type == NAMESPACE_SHARED) {
+	} else if (ns->type == MAIL_NAMESPACE_TYPE_SHARED) {
 		mns_type = "shared";
 	}
 
