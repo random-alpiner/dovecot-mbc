@@ -131,7 +131,7 @@ mbc_mailbox_rename(struct mailbox *src,
 static const struct notify_vfuncs mbc_vfuncs = {
 	.mailbox_create = mbc_mailbox_create,
 	.mailbox_rename = mbc_mailbox_rename
-}
+};
 
 void mbc_plugin_init(struct module *module)
 {
