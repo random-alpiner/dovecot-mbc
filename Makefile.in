@@ -26,8 +26,8 @@ DOVECOT_CONFIGDIR = /etc/dovecot/conf.d
 MAN1DIR = /usr/share/man/man1
 
 # uncomment the one matching your Dovecot version
-#DOVECOT_PLUGIN_API_2_1 = 1
-DOVECOT_PLUGIN_API_2_0 = 1
+DOVECOT_PLUGIN_API_2_1 = 1
+#DOVECOT_PLUGIN_API_2_0 = 1
 
 
 ## usually no need to configure anything below this line ##

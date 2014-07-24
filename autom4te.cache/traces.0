@@ -1,0 +1,214 @@
+m4trace:configure.ac:5: -1- m4_pattern_forbid([^_?A[CHUM]_])
+m4trace:configure.ac:5: -1- m4_pattern_forbid([_AC_])
+m4trace:configure.ac:5: -1- m4_pattern_forbid([^LIBOBJS$], [do not use LIBOBJS directly, use AC_LIBOBJ (see section `AC_LIBOBJ vs LIBOBJS'])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^AS_FLAGS$])
+m4trace:configure.ac:5: -1- m4_pattern_forbid([^_?m4_])
+m4trace:configure.ac:5: -1- m4_pattern_forbid([^dnl$])
+m4trace:configure.ac:5: -1- m4_pattern_forbid([^_?AS_])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^SHELL$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PATH_SEPARATOR$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_NAME$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_TARNAME$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_VERSION$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_STRING$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_BUGREPORT$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_URL$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^exec_prefix$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^prefix$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^program_transform_name$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^bindir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^sbindir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^libexecdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^datarootdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^datadir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^sysconfdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^sharedstatedir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^localstatedir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^includedir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^oldincludedir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^docdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^infodir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^htmldir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^dvidir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^pdfdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^psdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^libdir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^localedir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^mandir$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_NAME$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_TARNAME$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_VERSION$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_STRING$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_BUGREPORT$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^PACKAGE_URL$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^DEFS$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^ECHO_C$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^ECHO_N$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^ECHO_T$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^LIBS$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^build_alias$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^host_alias$])
+m4trace:configure.ac:5: -1- m4_pattern_allow([^target_alias$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CFLAGS$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^LDFLAGS$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^LIBS$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CPPFLAGS$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^CC$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^ac_ct_CC$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^EXEEXT$])
+m4trace:configure.ac:10: -1- m4_pattern_allow([^OBJEXT$])
+m4trace:configure.ac:11: -1- m4_pattern_allow([^INSTALL_PROGRAM$])
+m4trace:configure.ac:11: -1- m4_pattern_allow([^INSTALL_SCRIPT$])
+m4trace:configure.ac:11: -1- m4_pattern_allow([^INSTALL_DATA$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^CPP$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^CPPFLAGS$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^CPP$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^GREP$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^EGREP$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^STDC_HEADERS$])
+m4trace:configure.ac:16: -1- m4_pattern_allow([^HAVE_STDLIB_H$])
+m4trace:configure.ac:19: -1- m4_pattern_allow([^SIZEOF_INT$])
+m4trace:configure.ac:20: -1- m4_pattern_allow([^SIZEOF_LONG$])
+m4trace:configure.ac:21: -1- m4_pattern_allow([^SIZEOF_VOID_P$])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^SIZEOF_LONG_LONG$])
+m4trace:configure.ac:24: -1- AC_DEFUN([AC_TYPEOF], [
+  dnl * first check if we can get the size with redefining typedefs
+
+  order="$2"
+  if test "$2" = ""; then
+    order="int long long-long"
+  fi
+
+  result=""
+  visible="unknown"
+  AC_MSG_CHECKING([type of $1])
+  AC_CACHE_VAL(i_cv_typeof_$1,[
+  if test "x$ac_cv_c_compiler_gnu" = "xyes"; then
+    dnl * try with printf() + -Werror
+    old_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS -Werror"
+
+    for type in $order; do
+      case "$type" in
+        int)
+          fmt="%d"
+          ;;
+        unsigned-int)
+          fmt="%u"
+          ;;
+        long)
+          fmt="%ld"
+          ;;
+        unsigned-long)
+          fmt="%lu"
+          ;;
+        long-long)
+          fmt="%lld"
+          ;;
+        unsigned-long-long)
+          fmt="%llu"
+          ;;
+        *)
+          fmt=""
+          ;;
+      esac
+
+      if test "$fmt" != ""; then
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+          #include <sys/types.h>
+          #include <stdio.h>
+        ]], [[
+          printf("$fmt", ($1)0);
+        ]])],[
+          if test "$result" != ""; then
+            dnl * warning check isn't working
+            result=""
+            visible="unknown"
+            break
+          fi
+          result="`echo $type|sed 's/-/ /g'`"
+          visible="$result"
+        ],[])
+      fi
+    done
+    CFLAGS="$old_CFLAGS"
+  fi
+
+  if test "$result" = ""; then
+    for type in $order; do
+      type="`echo $type|sed 's/-/ /g'`"
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+        #include <sys/types.h>
+        typedef $type $1;
+      ]], [[]])],[
+        if test "$result" != ""; then
+          dnl * compiler allows redefining to anything
+          result=""
+          visible="unknown"
+          break
+        fi
+        result="$type"
+        visible="$type"
+      ],[])
+    done
+  fi
+
+  if test "$result" = ""; then
+    dnl * check with sizes
+
+    dnl * older autoconfs don't include sys/types.h, so do it manually
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
+      #include <stdio.h>
+      #include <sys/types.h>
+      int main() {
+        FILE *f=fopen("conftestval", "w");
+        if (!f) exit(1);
+        fprintf(f, "%d\n", sizeof($1));
+        exit(0);
+      }
+    ]])],[
+      size=`cat conftestval`
+      rm -f conftestval
+
+      for type in $order; do
+        actype="ac_cv_sizeof_`echo $type|sed 's/-/_/g'`"
+        if test "$size" = "`eval echo \\$$actype`"; then
+          result="`echo $type|sed 's/-/ /g'`"
+          visible="`expr $size \* 8`bit (using $result)"
+          break
+        fi
+      done
+      if test "$result" = ""; then
+        result=unknown
+        visible="`expr $size \* 8`bit (unknown type)"
+      fi
+    ],[],[])
+  fi
+  i_cv_typeof_$1=$result/$visible
+  ])
+
+  typeof_$1=`echo $i_cv_typeof_$1 | sed s,/.*$,,`
+  visible=`echo $i_cv_typeof_$1 | sed s,^.*/,,`
+  AC_MSG_RESULT($visible)
+])
+m4trace:configure.ac:145: -1- m4_pattern_allow([^HAVE_UINTMAX_T$])
+m4trace:configure.ac:146: -1- m4_pattern_allow([^HAVE_UINT_FAST32_T$])
+m4trace:configure.ac:147: -1- m4_pattern_allow([^HAVE_SOCKLEN_T$])
+m4trace:configure.ac:149: -1- m4_pattern_allow([^HAVE_UOFF_T$])
+m4trace:configure.ac:156: -1- AC_TYPEOF([off_t], [long int long-long])
+m4trace:configure.ac:156: -1- _m4_warn([cross], [AC_RUN_IFELSE called without default to allow cross compiling], [../../lib/autoconf/general.m4:2748: AC_RUN_IFELSE is expanded from...
+../../lib/m4sugar/m4sh.m4:639: AS_IF is expanded from...
+../../lib/autoconf/general.m4:2031: AC_CACHE_VAL is expanded from...
+configure.ac:24: AC_TYPEOF is expanded from...
+configure.ac:156: the top level])
+m4trace:configure.ac:162: -1- m4_pattern_allow([^UOFF_T_INT$])
+m4trace:configure.ac:170: -1- m4_pattern_allow([^UOFF_T_LONG$])
+m4trace:configure.ac:178: -1- m4_pattern_allow([^UOFF_T_LONG_LONG$])
+m4trace:configure.ac:199: -1- m4_pattern_allow([^HAVE_STRUCT_IOVEC$])
+m4trace:configure.ac:204: -1- m4_pattern_allow([^HAVE_SETENV$])
+m4trace:configure.ac:207: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:207: -1- m4_pattern_allow([^LTLIBOBJS$])
