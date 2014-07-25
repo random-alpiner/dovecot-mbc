@@ -15,7 +15,7 @@
 
 #define MAILBOX_NAME_LEN 64
 
-#define MBC_USER_CONTEXT(obj) \
+#define MBC_MAIL_USER_CONTEXT(obj) \
 	MODULE_CONTEXT(obj, mbc_mail_user_module)
 
 static struct notify_context *mbc_ctx;
