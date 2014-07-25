@@ -34,7 +34,7 @@ static void mbc_mail_user_created(struct mail_user *user)
 	struct mbc_mail_user *muser;
 	const char *str;
 
-	muser = p_new(user->pool, struct mbc_user, 1);
+	muser = p_new(user->pool, struct mbc_mail_user, 1);
 	MODULE_CONTEXT_SET(user, mbc_mail_user_module, muser);
 
 	str = mail_user_plugin_getenv(user, "mbc_script");
