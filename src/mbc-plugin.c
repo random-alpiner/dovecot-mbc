@@ -31,7 +31,7 @@ static MODULE_CONTEXT_DEFINE_INIT(mbc_mail_user_module,
 
 static void mbc_mail_user_created(struct mail_user *user)
 {
-	struct mbc_user *muser;
+	struct mbc_mail_user *muser;
 	const char *str;
 
 	muser = p_new(user->pool, struct mbc_mail_user, 1);
