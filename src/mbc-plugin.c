@@ -26,7 +26,7 @@ struct mbc_mail_user {
 	const char *mbc_script_loc;
 };
 
-static MODULE_CONTEXT_DEFINE_INIT(mbc_mail_user_module,
+static MODULE_CONTEXT_DEFINE(mbc_mail_user_module,
 				  &mail_user_module_register);
 
 static void mbc_mail_user_created(struct mail_user *user)
