@@ -16,26 +16,26 @@
 #define MAILBOX_NAME_LEN 64
 
 #define MBC_USER_CONTEXT(obj) \
-	MODULE_CONTEXT(obj, mbc_user_module)
+	MODULE_CONTEXT(obj, mbc_mail_user_module)
 
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
 
-struct mbc_user {
+struct mbc_mail_user {
 	union mail_user_module_context module_ctx;
 	const char *mbc_script_loc;
 };
 
-static MODULE_CONTEXT_DEFINE_INIT(mbc_user_module,
+static MODULE_CONTEXT_DEFINE(mbc_mail_user_module,
 				  &mail_user_module_register);
 
 static void mbc_mail_user_created(struct mail_user *user)
 {
-	struct mbc_user *muser;
+	struct mbc_mail_user *muser;
 	const char *str;
 
 	muser = p_new(user->pool, struct mbc_user, 1);
-	MODULE_CONTEXT_SET(user, mbc_user_module, muser);
+	MODULE_CONTEXT_SET(user, mbc_mail_user_module, muser);
 
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
@@ -48,7 +48,7 @@ static struct mail_storage_hooks mbc_mail_storage_hooks = {
 static void
 mbc_mailbox_create(struct mailbox *box)
 {
-	struct mbc_user *muser = MBC_USER_CONTEXT(box->storage->user);
+	struct mbc_mail_user *muser = MBC_MAIL_USER_CONTEXT(box->storage->user);
 
 	char **exec_args;
 	char *directory;
