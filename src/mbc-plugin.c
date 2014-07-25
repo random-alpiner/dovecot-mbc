@@ -22,7 +22,9 @@ static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
 
 struct mbc_user {
-	union mail_user_module_context module_ctx;
+	union mail_user_module_context {
+		struct mail_user_module_register *reg;
+	};
 	const char *mbc_script_loc;
 };
 
