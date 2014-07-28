@@ -27,13 +27,21 @@ License
 -------
 GPLv3 for my stuff. (Hooray for the FSF! Free Software means Free Society!)
 
-For the notify-plugin.h file, it is LGPLv2.1
+For the notify-plugin.h file as well as for dovecot's configure.ac it's LGPLv2.1
 
 Installation
 ------------
 Installation of the plugin is essentially a 4-step process:
 
-1) Configure the paths in Makefile according to your installation
+1) Install the following source files to the corresponding directory (e.g. /usr/include/dovecot)
+   
+   * dovecot-core
+   * dovecot-common
+   * dovecot-imapd
+
+   Debian/Ubuntu users can use "apt-get source" for this purpose
+
+2) Configure the paths in Makefile according to your installation
    The relevant variables are:
 
    * SCRIPT_GROUP - the system group of the main mail user/users
@@ -41,18 +49,17 @@ Installation of the plugin is essentially a 4-step process:
    * DOVECOT_MODULEDIR - directory where the plugin shall be installed
    * DOVECOT_ETCDIR - directory where dovecot.conf resides
    * DOVECOT_CONFIGDIR - dovecot's conf.d directory (or equivalent)
-   * DOVECOT_PLUGIN_API_2_{0,1} - the plugin API to use
    * MAN1DIR - directory where the plugin's manual page shall be installed
 
-2) Create a Makefile by issuing the following command
+3) Create a Makefile by issuing the following command
 
       ./configure
 
-3) Compile the module with the following command line
+4) Compile the module with the following command line
 
       make build
 
-4) Then copy the resulting binary mbc_plugin.so, the man page, the default config and example script to the corresponding directories
+5) Then copy the resulting binary mbc_plugin.so, the man page, the default config and example script to the corresponding directories
    This can be achieved using:
 
       make install
@@ -63,18 +70,20 @@ Configuration
 -------------
 After the plugin library is installed and ready to be used, Dovecot's configuration needs to be adapted to make Dovecot use the plugin.
 
-This is a 2-step process:
+This is a 3-step process:
 
-1) Make Dovecot aware of the plugin.
+1) Copy the file mbc_script.sh.dist to mbc_script.sh (or any other file name that suits you) and add the script you would like to execute
+
+2) Make Dovecot aware of the plugin.
    This happens by adding it to the corresponding mail_plugins-list (e.g. global/lmtp/lda/imap/...)
    Note, that dovecot-mbc depends on the notify plugin's notifications, so don't forget to enable it as well!
 
       mail_plugins = $mail_plugins notify mbc
 
-2) Setting the plugin's configuration options.
+3) Setting the plugin's configuration options.
    This is done in the new configuration file conf.d/90-mbc.conf.
 
-   Just provide the absolute path to the script you want to execute and you are set:
+   Just provide the absolute path to the script you want to execute (see first step above) and you are set:
 
       plugin {
         mbc_script = /etc/dovecot/mbc_script.sh
@@ -92,7 +101,7 @@ dovecot-mbc's git repository consists of the following folders and files:
 - conf/ - here you find the configuration files for the plugin
    - 90-mbc.conf - example configuration file
 - contrib/ - here you find all the contributed files
-   - mbc_script.sh - example
+   - mbc_script.sh.dist - example script file
    - src/ - here is some more contributed source code
       - notify-plugin.h - the notify's plugin header file (which is needed during compilation)
 - man/ - here you can find the man pages
@@ -104,4 +113,4 @@ dovecot-mbc's git repository consists of the following folders and files:
 Special thanks
 ---------------------
 Special thanks go to Peter Marschall <peter@adpm.de>.
-Reading his github repository https://github.com/marschap/fetchmail_wakeup helped me a lot. Some of this work may be inspired by his plugin.
+Reading his github repository https://github.com/marschap/fetchmail_wakeup helped me a lot. Some of my work in this repository may be inspired by his plugin.
