@@ -14,7 +14,7 @@
 .\" with this program; if not, write to the Free Software Foundation, Inc.,
 .\" 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 .\"
-.TH DOVECOT-MBC 1 "16 Apr 2014" "" "Dovecot Plugins"
+.TH DOVECOT-MBC 1 "28 Jul 2014" "" "Dovecot Plugins"
 
 .SH NAME
 dovecot-mbc \- trigger a custom script on mailbox creation and renaming
@@ -37,8 +37,10 @@ Therefore, please declare the absolute path to this plugin in the option
 .SH OPTIONS
 There are no options for this plugin.
 However, the environment variables $MBC_DIRECTORY (Mailbox folder),
-$MBC_MAILBOX (Mailbox name) and $MBC_PREFIX (Namespace prefix)
-are set by the plugin.
+$MBC_MAILBOX (Mailbox name), $MBC_PREFIX (Namespace prefix),
+$MBC_TYPE (Mailbox type), $MBC_INBOX (Inbox flag),
+$MBC_HIDDEN (hidden flag), $MBC_SUBSCRIPTIONS (Subscriptions flag)
+and $MBC_LIST (list flag) are set by the plugin.
 
 .SH SEE ALSO
 .BR dovecot (1),
