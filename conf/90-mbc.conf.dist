@@ -9,5 +9,5 @@
 
 plugin {
 	# Give the path to the script which should be executed
-	mbc_script = /etc/dovecot/mbc_script.sh
+	#mbc_script = /etc/dovecot/mbc_script.sh
 }
