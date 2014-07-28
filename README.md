@@ -81,9 +81,9 @@ This is a 3-step process:
       mail_plugins = $mail_plugins notify mbc
 
 3) Setting the plugin's configuration options.
-   This is done in the new configuration file conf.d/90-mbc.conf.
+   This is done in the new configuration file conf.d/90-mbc.conf.dist
 
-   Just provide the absolute path to the script you want to execute (see first step above) and you are set:
+   Copy it to conf.d/90-mbc.conf, provide the absolute path to the script you want to execute (see first step above) and you are set:
 
       plugin {
         mbc_script = /etc/dovecot/mbc_script.sh
