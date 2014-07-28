@@ -38,7 +38,7 @@ PLUGIN_SOURCES = src/mbc-plugin.c
 PLUGIN_NAME = mbc_plugin.so
 
 # helper sources, target name & setuid account #
-SCRIPT_NAME = contrib/mbc_script.sh
+SCRIPT_NAME = contrib/mbc_script.sh.dist
 
 # manual pages in their respective sections #
 MAN1PAGES = man/dovecot-mbc.1
