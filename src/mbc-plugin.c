@@ -17,6 +17,8 @@
 
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
+const char *logpath;
+bool log = false;
 
 static MODULE_CONTEXT_DEFINE(mbc_mail_user_module,
 			     &mail_user_module_register);
@@ -36,6 +38,10 @@ static void mbc_mail_user_created(struct mail_user *user)
 
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
+	
+	if (log) {
+		Log("dovecot-mbc: mail user created. let's get some stuff done.");
+	}
 }
 
 static struct mail_storage_hooks mbc_mail_storage_hooks = {
@@ -46,6 +52,10 @@ static void
 mbc_mailbox_create(struct mailbox *box)
 {
 	struct mbc_mail_user *muser = MODULE_CONTEXT(box->storage->user, mbc_mail_user_module);
+	
+	if (log) {
+		Log("dovecot-mbc: unknown mailbox detected. preparing take-off to shell script.");
+	}
 
 	char **exec_args;
 	char *directory;
@@ -96,6 +106,10 @@ mbc_mailbox_create(struct mailbox *box)
 	exec_args[6] = handles_subscriptions;
 	exec_args[7] = listed;
 	exec_args[8] = NULL;
+	
+	if (log) {
+		Log("dovecot-mbc: mailbox properties read. ready for take-off.");
+	}
 
 	if (muser->mbc_script_loc){
 		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
@@ -106,7 +120,17 @@ mbc_mailbox_create(struct mailbox *box)
 		env_put(t_strconcat("MBC_HIDDEN=", is_hidden, NULL));
 		env_put(t_strconcat("MBC_SUBSCRIPTIONS=", handles_subscriptions, NULL));
 		env_put(t_strconcat("MBC_LIST=", listed, NULL));
+		
+		if (log) {
+			Log("dovecot-mbc: taking off.");
+		}
+		
 		execvp_const(exec_args[0], exec_args);
+		
+		if (log) {
+			Log("dovecot-mbc: eagle has landed. cleaning up.");
+		}
+			
 		env_remove("MBC_MAILBOX");
 		env_remove("MBC_DIRECTORY");
 		env_remove("MBC_PREFIX");
@@ -115,6 +139,10 @@ mbc_mailbox_create(struct mailbox *box)
 		env_remove("MBC_HIDDEN");
 		env_remove("MBC_SUBSCRIPTIONS");
 		env_remove("MBC_LIST");
+	} else {
+		if (log) {
+			Log("dovecot-mbc: unknown script destination. aborting.");
+		}
 	}
 }
 
@@ -123,6 +151,9 @@ mbc_mailbox_rename(struct mailbox *src,
 			struct mailbox *dest, bool rename_children ATTR_UNUSED)
 {
 	mbc_mailbox_create(dest);
+	if (log) {
+		Log("dovecot-mbc: work done after mailbox renaming.");
+	}
 }
 
 static const struct notify_vfuncs mbc_vfuncs = {
@@ -134,10 +165,28 @@ void mbc_plugin_init(struct module *module)
 {
 	mbc_ctx = notify_register(&mbc_vfuncs);
 	mail_storage_hooks_add(module, &mbc_mail_storage_hooks);
+	
+	log = mail_user_plugin_getenv(user, "debug");
+	logpath = mail_user_plugin_getenv(user, "debug_path");
+	
+	if (log) {
+		if (!logpath) {
+			logpath = LOGFILE;
+		}
+		
+		Log("dovecot-mbc: initialized.");
+	}
 }
 
 void mbc_plugin_deinit(void)
 {
 	notify_unregister(mbc_ctx);
 	mail_storage_hooks_remove(&mbc_mail_storage_hooks);
+	
+	if (log) {
+		Log("dovecot-mbc: shutting down. bye.");
+	}
+	
+	log = NULL;
+	logpath = NULL;
 }
