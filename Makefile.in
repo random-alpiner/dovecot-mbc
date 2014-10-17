@@ -34,7 +34,7 @@ LDFLAGS = @LDFLAGS@ @LIBS@
 CFLAGS += -DDOVECOT_PLUGIN_API_2_2
 
 # plugin source & target name #
-PLUGIN_SOURCES = src/mbc-plugin.c /src/mbc-log.c
+PLUGIN_SOURCES = src/mbc-plugin.c /src/mbc-log.cpp
 PLUGIN_NAME = mbc_plugin.so
 
 # helper sources, target name & setuid account #
