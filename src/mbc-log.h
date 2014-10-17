@@ -1,6 +1,6 @@
 // log.h; the header file which defines Log(); and LogErr();
 
-#define LOGFILE "/var/log/dovecot-mbc.log" // all Log(); messages will be appended to this file
+#define LOGFILE "/var/log/mail.log" // all Log(); messages will be appended to this file
 
 extern bool LogCreated; // keeps track whether the log file is created or not
 
