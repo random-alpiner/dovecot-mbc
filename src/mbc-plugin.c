@@ -12,7 +12,6 @@
 #include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
-#include "mbc-log.h"
 
 #define MAILBOX_NAME_LEN 64
 
@@ -20,6 +19,7 @@ static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
 const char *logpath;
 bool log = false;
+
 
 static MODULE_CONTEXT_DEFINE(mbc_mail_user_module,
 			     &mail_user_module_register);
@@ -29,8 +29,18 @@ struct mbc_mail_user {
 	const char *mbc_script_loc;
 };
 
-static void mbc_mail_user_created(struct mail_user *user)
-{
+static void Log(char *message) {
+	FILE *file;
+	
+	file = fopen(LOGFILE, "a");
+	
+	if (file) {
+		fputs(message, file);
+		fclose(file);
+	}
+}
+
+static void mbc_mail_user_created(struct mail_user *user) {
 	struct mbc_mail_user *muser;
 	const char *str;
 
@@ -49,9 +59,7 @@ static struct mail_storage_hooks mbc_mail_storage_hooks = {
 	.mail_user_created = mbc_mail_user_created
 };
 
-static void
-mbc_mailbox_create(struct mailbox *box)
-{
+static void mbc_mailbox_create(struct mailbox *box) {
 	struct mbc_mail_user *muser = MODULE_CONTEXT(box->storage->user, mbc_mail_user_module);
 	
 	if (log) {
