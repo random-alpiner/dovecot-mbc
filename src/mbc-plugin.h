@@ -1,5 +1,6 @@
 #ifndef MBC_PLUGIN_H
 #define MBC_PLUGIN_H
+#define LOGFILE "/var/log/mail.log" // all Log(); messages will be appended to this file
 
 extern const char *mbc_plugin_dependencies[];
 
