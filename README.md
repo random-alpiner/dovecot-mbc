@@ -115,8 +115,6 @@ dovecot-mbc's git repository consists of the following folders and files:
 - src/ - the plugin's source code
    - mbc-plugin.c - the main source code
    - mbc-plugin.h - the header file
-   - mbc-log.cpp - source code for log routine
-   - mbc-log.h - log header
 
 Special thanks
 ---------------------
