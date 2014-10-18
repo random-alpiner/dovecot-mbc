@@ -13,5 +13,5 @@ plugin {
 	
 	# Add your debug settings
 	#debug = false
-	#logpath = "/var/log/mail.log"
+	#logpath = /var/log/mail.log
 }
