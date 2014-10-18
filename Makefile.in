@@ -35,7 +35,7 @@ CFLAGS += -DDOVECOT_PLUGIN_API_2_2
 
 # plugin source & target name #
 PLUGIN_SOURCES = src/mbc-plugin.c
-PLUGIN_NAME = mbc_plugin.so
+PLUGIN_NAME = lib90_mbc_plugin.so
 
 # helper sources, target name & setuid account #
 SCRIPT_NAME = contrib/mbc_script.sh.dist
@@ -82,7 +82,7 @@ install: install_plugin install_script install_config install_man
 
 install_plugin: ${PLUGIN_NAME}
 	install -d ${DESTDIR}/${DOVECOT_MODULEDIR}
-	install $< ${DESTDIR}/${DOVECOT_MODULEDIR}
+	install -m 644 $< ${DESTDIR}/${DOVECOT_MODULEDIR}
 
 install_script: ${SCRIPT_NAME}
 	install -d ${DESTDIR}/${DOVECOT_ETCDIR}
