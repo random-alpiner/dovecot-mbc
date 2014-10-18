@@ -50,7 +50,17 @@ static void mbc_mail_user_created(struct mail_user *user) {
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
 	
+	if (mail_user_plugin_getenv(user, "debug") == "true") {
+		log = 1;
+	}
+	logpath = mail_user_plugin_getenv(user, "debug_path");
+	
+	
 	if (log) {
+		if (!logpath) {
+			logpath = LOGFILE;
+		}
+		
 		Log("dovecot-mbc: mail user created. let's get some stuff done.");
 	}
 }
@@ -174,19 +184,6 @@ void mbc_plugin_init(struct module *module)
 {
 	mbc_ctx = notify_register(&mbc_vfuncs);
 	mail_storage_hooks_add(module, &mbc_mail_storage_hooks);
-	
-	if (mail_user_plugin_getenv(user, "debug") == "true") {
-		log = 1;
-	}
-	logpath = mail_user_plugin_getenv(user, "debug_path");
-	
-	if (log) {
-		if (!logpath) {
-			logpath = LOGFILE;
-		}
-		
-		Log("dovecot-mbc: initialized.");
-	}
 }
 
 void mbc_plugin_deinit(void)
