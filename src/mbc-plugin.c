@@ -198,6 +198,6 @@ void mbc_plugin_deinit(void)
 		Log("dovecot-mbc: shutting down. bye.");
 	}
 	
-	log = NULL;
-	logpath = NULL;
+	log = 0;
+	logpath = "";
 }
