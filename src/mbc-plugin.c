@@ -18,7 +18,7 @@
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
 const char *logpath;
-bool log = false;
+bool log = 0;
 
 
 static MODULE_CONTEXT_DEFINE(mbc_mail_user_module,
@@ -175,7 +175,9 @@ void mbc_plugin_init(struct module *module)
 	mbc_ctx = notify_register(&mbc_vfuncs);
 	mail_storage_hooks_add(module, &mbc_mail_storage_hooks);
 	
-	log = mail_user_plugin_getenv(user, "debug");
+	if (mail_user_plugin_getenv(user, "debug") == "true") {
+		log = 1;
+	}
 	logpath = mail_user_plugin_getenv(user, "debug_path");
 	
 	if (log) {
