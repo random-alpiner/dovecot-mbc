@@ -94,7 +94,7 @@ install_man: ${MAN1PAGES}
 
 install_config: ${CONFIG}
 	install -d ${DESTDIR}/${DOVECOT_CONFIGDIR}
-	install -m 640 $< ${DESTDIR}/${DOVECOT_CONFIGDIR}
+	install $< ${DESTDIR}/${DOVECOT_CONFIGDIR}
 
 clean:
 	$(RM) ${PLUGIN_NAME} ${SCRIPT_NAME} ${MAN1PAGES} ${CONFIG}
