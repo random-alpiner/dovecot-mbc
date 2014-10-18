@@ -44,7 +44,7 @@ SCRIPT_NAME = contrib/mbc_script.sh.dist
 MAN1PAGES = man/dovecot-mbc.1
 
 # sample config file
-CONFIG = conf/90-mbc.conf
+CONFIG = conf/90-mbc.conf.dist
 
 # compiler is determined by configure.in
 CC = @CC@
