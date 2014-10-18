@@ -12,6 +12,7 @@
 #include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
+#include "mbc-log.h"
 
 #define MAILBOX_NAME_LEN 64
 
