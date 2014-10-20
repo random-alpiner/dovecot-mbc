@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "lib.h"
 #include "array.h"
 #include "llist.h"
