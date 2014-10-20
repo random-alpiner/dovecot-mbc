@@ -4,7 +4,7 @@
 
 # This plugin uses the notify plugin in order to get the
 # events. So do not forget to enable the plugins in
-# 10-mail.conf by adding them to mail_plugins
+# 20-lmtp.conf or 10-mail.conf by adding them to mail_plugins
 # (e.g. mail_plugins = $mail_plugins notify mbc)
 
 plugin {
