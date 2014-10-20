@@ -40,7 +40,7 @@ static void mbc_mail_user_created(struct mail_user *user)
 	i_info("Getting script location");
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
-	i_info("Script location: %s");
+	i_info("Script location: %s", str);
 }
 
 static struct mail_storage_hooks mbc_mail_storage_hooks = {
