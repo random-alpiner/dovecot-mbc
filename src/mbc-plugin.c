@@ -1,31 +1,34 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "lib.h"
 #include "array.h"
 #include "llist.h"
 #include "str.h"
 #include "str-sanitize.h"
 #include "imap-util.h"
-#include "module-context.h"
 #include "mail-user.h"
 #include "mail-storage-private.h"
 #include "mail-namespace.h"
 #include "notify-plugin.h"
 #include "mbc-plugin.h"
 
+#include <stdlib.h>
+
+#define MBC_MAIL_USER_CONTEXT(obj) \
+	MODULE_CONTEXT(obj, mbc_mail_user_module)
+
 static struct notify_context *mbc_ctx;
 const char *mbc_plugin_dependencies[] = { "notify", NULL };
 
+static MODULE_CONTEXT_DEFINE_INIT(mbc_mail_user_module,
+				  &mail_user_module_register);
 
-static MODULE_CONTEXT_DEFINE(mbc_mail_user_module,
-			     &mail_user_module_register);
-			     
 struct mbc_mail_user {
 	union mail_user_module_context module_ctx;
 	const char *mbc_script_loc;
 };
 
-static void mbc_mail_user_created(struct mail_user *user) {
+
+static void mbc_mail_user_created(struct mail_user *user)
+{
 	struct mbc_mail_user *muser;
 	const char *str;
 
@@ -34,16 +37,16 @@ static void mbc_mail_user_created(struct mail_user *user) {
 
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
-	
 }
 
 static struct mail_storage_hooks mbc_mail_storage_hooks = {
 	.mail_user_created = mbc_mail_user_created
 };
 
-static void mbc_mailbox_create(struct mailbox *box) {
-	struct mbc_mail_user *muser = MODULE_CONTEXT(box->storage->user, mbc_mail_user_module);
-	
+static void mbc_mailbox_create(struct mailbox *box)
+{
+	struct mbc_mail_user *muser = MBC_MAIL_USER_CONTEXT(box->storage->user);
+
 	char **exec_args;
 	char *directory;
 	struct mail_namespace *ns = mailbox_get_namespace(box);
@@ -53,34 +56,38 @@ static void mbc_mailbox_create(struct mailbox *box) {
 	char *listed;
 	const char **path_r;
 
-	if (ns->set->inbox) {
+	if (ns->set->inbox)
+	{
 		is_inbox = "true";
 	}
-	if (ns->set->hidden) {
+	if (ns->set->hidden)
+	{
 		is_hidden = "true";
 	}
-	if (ns->set->subscriptions) {
+	if (ns->set->subscriptions)
+	{
 		handles_subscriptions = "true";
 	}
-	if (ns->set->list) {
+	if (ns->set->list)
+	{
 		listed = "true";
 	}
-
-	if (ns->type == MAIL_NAMESPACE_TYPE_PRIVATE) {
+	if (ns->type == MAIL_NAMESPACE_TYPE_PRIVATE)
+	{
 		mns_type = "private";
-	} else if (ns->type == MAIL_NAMESPACE_TYPE_PUBLIC) {
+	} else if (ns->type == MAIL_NAMESPACE_TYPE_PUBLIC)
+	{
 		mns_type = "public";
-	} else if (ns->type == MAIL_NAMESPACE_TYPE_SHARED) {
+	} else if (ns->type == MAIL_NAMESPACE_TYPE_SHARED)
+	{
 		mns_type = "shared";
 	}
 
 	prefix = t_strdup(ns->set->prefix);
 	if (mail_storage_is_mailbox_file(box->storage)) {
-		directory = mailbox_list_get_path(box->list, box->name,
-					    MAILBOX_LIST_PATH_TYPE_CONTROL, path_r);
+		directory = mailbox_list_get_path(box->list, box->name, MAILBOX_LIST_PATH_TYPE_CONTROL, path_r);
 	} else {
-		directory = mailbox_list_get_path(box->list, box->name,
-					    MAILBOX_LIST_PATH_TYPE_MAILBOX, path_r);
+		directory = mailbox_list_get_path(box->list, box->name, MAILBOX_LIST_PATH_TYPE_MAILBOX, path_r);
 	}
 
 	exec_args = i_new(const char *, 9);
@@ -93,7 +100,7 @@ static void mbc_mailbox_create(struct mailbox *box) {
 	exec_args[6] = handles_subscriptions;
 	exec_args[7] = listed;
 	exec_args[8] = NULL;
-	
+
 	if (muser->mbc_script_loc){
 		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
 		env_put(t_strconcat("MBC_DIRECTORY=", directory, NULL));
@@ -103,9 +110,9 @@ static void mbc_mailbox_create(struct mailbox *box) {
 		env_put(t_strconcat("MBC_HIDDEN=", is_hidden, NULL));
 		env_put(t_strconcat("MBC_SUBSCRIPTIONS=", handles_subscriptions, NULL));
 		env_put(t_strconcat("MBC_LIST=", listed, NULL));
-		
+
 		execvp_const(exec_args[0], exec_args);
-		
+
 		env_remove("MBC_MAILBOX");
 		env_remove("MBC_DIRECTORY");
 		env_remove("MBC_PREFIX");
@@ -117,9 +124,7 @@ static void mbc_mailbox_create(struct mailbox *box) {
 	}
 }
 
-static void
-mbc_mailbox_rename(struct mailbox *src,
-			struct mailbox *dest, bool rename_children ATTR_UNUSED)
+static void mbc_mailbox_rename(struct mailbox *src, struct mailbox *dest)
 {
 	mbc_mailbox_create(dest);
 }
@@ -137,6 +142,6 @@ void mbc_plugin_init(struct module *module)
 
 void mbc_plugin_deinit(void)
 {
-	notify_unregister(mbc_ctx);
 	mail_storage_hooks_remove(&mbc_mail_storage_hooks);
+	notify_unregister(mbc_ctx);
 }
