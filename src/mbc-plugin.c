@@ -35,12 +35,10 @@ static void mbc_mail_user_created(struct mail_user *user)
 	const char *str;
 
 	muser = p_new(user->pool, struct mbc_mail_user, 1);
-	i_info("Setting context");
 	MODULE_CONTEXT_SET(user, mbc_mail_user_module, muser);
-	i_info("Getting script location");
+
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
-	i_info("Script location: %s", str);
 }
 
 static struct mail_storage_hooks mbc_mail_storage_hooks = {
@@ -58,7 +56,7 @@ static void mbc_mailbox_create(struct mailbox *box)
 	char *mns_type;
 	char *is_inbox = "false", *is_hidden = "false", *handles_subscriptions = "false";
 	char *listed;
-	const char **path_r;
+	const char *path_r;
 
 	if (ns->set->inbox)
 	{
@@ -88,11 +86,13 @@ static void mbc_mailbox_create(struct mailbox *box)
 	}
 
 	prefix = t_strdup(ns->set->prefix);
+
 	if (mail_storage_is_mailbox_file(box->storage)) {
-		directory = mailbox_list_get_path(box->list, box->name, MAILBOX_LIST_PATH_TYPE_CONTROL, path_r);
+		mailbox_list_get_path(box->list, box->name, MAILBOX_LIST_PATH_TYPE_CONTROL, &path_r);
 	} else {
-		directory = mailbox_list_get_path(box->list, box->name, MAILBOX_LIST_PATH_TYPE_MAILBOX, path_r);
+		mailbox_list_get_path(box->list, box->name, MAILBOX_LIST_PATH_TYPE_MAILBOX, &path_r);
 	}
+	directory = path_r;
 
 	exec_args = i_new(const char *, 9);
 	exec_args[0] = muser->mbc_script_loc;
