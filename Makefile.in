@@ -35,7 +35,7 @@ CFLAGS += -DDOVECOT_PLUGIN_API_2_2
 
 # plugin source & target name #
 PLUGIN_SOURCES = src/mbc-plugin.c
-PLUGIN_NAME = lib_mbc_plugin.so
+PLUGIN_NAME = lib90_mbc_plugin.so
 
 # helper sources, target name & setuid account #
 SCRIPT_NAME = contrib/mbc_script.sh.dist
