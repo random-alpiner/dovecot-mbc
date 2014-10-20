@@ -89,12 +89,6 @@ This is a 3-step process:
         mbc_script = /etc/dovecot/mbc_script.sh
       }
       
-   You can turn on debugging (and its respective path) by the variables <code>"debug"</code> and <code>"logpath"</code>.
-   Default log path is "/var/log/mail.log".
-
-      debug = true
-      logpath = /var/log/mail.log
-
 Now restart your dovecot daemon and the script is executed, if a context which uses the plugin creates or renames a mailbox.
 
 GIT repository structure
