@@ -10,8 +10,4 @@
 plugin {
 	# Give the path to the script which should be executed
 	#mbc_script = /etc/dovecot/mbc_script.sh
-	
-	# Add your debug settings
-	#debug = false
-	#logpath = /var/log/mail.log
 }
