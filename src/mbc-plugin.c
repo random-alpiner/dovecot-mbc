@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 
-#define MBC_MAIL_USER_CONTEXT(obj) \
+#define MBC_USER_CONTEXT(obj) \
 	MODULE_CONTEXT(obj, mbc_mail_user_module)
 
 static struct notify_context *mbc_ctx;
@@ -35,10 +35,12 @@ static void mbc_mail_user_created(struct mail_user *user)
 	const char *str;
 
 	muser = p_new(user->pool, struct mbc_mail_user, 1);
+	i_info("Setting context");
 	MODULE_CONTEXT_SET(user, mbc_mail_user_module, muser);
-
+	i_info("Getting script location");
 	str = mail_user_plugin_getenv(user, "mbc_script");
 	muser->mbc_script_loc = str;
+	i_info("Script location: %s");
 }
 
 static struct mail_storage_hooks mbc_mail_storage_hooks = {
@@ -47,7 +49,7 @@ static struct mail_storage_hooks mbc_mail_storage_hooks = {
 
 static void mbc_mailbox_create(struct mailbox *box)
 {
-	struct mbc_mail_user *muser = MBC_MAIL_USER_CONTEXT(box->storage->user);
+	struct mbc_mail_user *muser = MBC_USER_CONTEXT(box->storage->user);
 
 	char **exec_args;
 	char *directory;
