@@ -14,6 +14,8 @@
 
 #include <stdlib.h>
 
+#include <sys/wait.h>
+
 #define MBC_USER_CONTEXT(obj) \
 	MODULE_CONTEXT(obj, mbc_mail_user_module)
 
@@ -105,7 +107,8 @@ static void mbc_mailbox_create(struct mailbox *box)
 	exec_args[7] = listed;
 	exec_args[8] = NULL;
 
-	if (muser->mbc_script_loc){
+	if (muser->mbc_script_loc) {
+
 		env_put(t_strconcat("MBC_MAILBOX=", box->name, NULL));
 		env_put(t_strconcat("MBC_DIRECTORY=", directory, NULL));
 		env_put(t_strconcat("MBC_PREFIX=", prefix, NULL));
@@ -115,7 +118,21 @@ static void mbc_mailbox_create(struct mailbox *box)
 		env_put(t_strconcat("MBC_SUBSCRIPTIONS=", handles_subscriptions, NULL));
 		env_put(t_strconcat("MBC_LIST=", listed, NULL));
 
-		execvp_const(exec_args[0], exec_args);
+		pid_t pid = fork();
+		switch (pid) {
+		case -1:
+			i_fatal("%s : process fork failure", __func__);
+			break;
+		case 0:
+			i_info("%s : child continue; mailbox=%s", __func__, box->name);
+			execvp_const(exec_args[0], exec_args);
+			i_fatal("%s : child should never return", __func__);
+			break;
+		default:
+			i_info("%s : parent continue; child pid=%d", __func__, pid);
+			int status; waitpid( -1, &status, WNOHANG ); // clean zombie children
+			break;
+		}
 
 		env_remove("MBC_MAILBOX");
 		env_remove("MBC_DIRECTORY");
@@ -125,7 +142,9 @@ static void mbc_mailbox_create(struct mailbox *box)
 		env_remove("MBC_HIDDEN");
 		env_remove("MBC_SUBSCRIPTIONS");
 		env_remove("MBC_LIST");
+
 	}
+
 }
 
 static void mbc_mailbox_rename(struct mailbox *src, struct mailbox *dest)
