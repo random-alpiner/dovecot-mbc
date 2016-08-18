@@ -31,7 +31,7 @@ MAN1DIR = /usr/share/man/man1
 CFLAGS = @CFLAGS@ @DEFS@
 LDFLAGS = @LDFLAGS@ @LIBS@
 
-CFLAGS += -DDOVECOT_PLUGIN_API_2_2
+CFLAGS += -DDOVECOT_PLUGIN_API_2_2 -DHAVE_SOCKLEN_T
 
 # plugin source & target name #
 PLUGIN_SOURCES = src/mbc-plugin.c
