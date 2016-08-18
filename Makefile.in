@@ -81,7 +81,8 @@ ${PLUGIN_NAME}: ${PLUGIN_SOURCES}
 		-e 's:PLUGIN_NAME:${PLUGIN_NAME}:g' \
 	$< > $@
 
-install: install_plugin install_script install_config install_man
+install: install_plugin install_script install_config
+#install: install_plugin install_script install_config install_man
 
 install_plugin: ${PLUGIN_NAME}
 	install -d ${DESTDIR}/${DOVECOT_MODULEDIR}
